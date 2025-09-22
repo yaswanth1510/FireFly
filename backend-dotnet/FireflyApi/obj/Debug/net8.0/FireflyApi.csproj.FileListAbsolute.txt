@@ -151,3 +151,4 @@
 /home/runner/work/FireFly/FireFly/backend-dotnet/FireflyApi/obj/Debug/net8.0/FireflyApi.pdb
 /home/runner/work/FireFly/FireFly/backend-dotnet/FireflyApi/obj/Debug/net8.0/FireflyApi.genruntimeconfig.cache
 /home/runner/work/FireFly/FireFly/backend-dotnet/FireflyApi/obj/Debug/net8.0/ref/FireflyApi.dll
+/home/runner/work/FireFly/FireFly/backend-dotnet/FireflyApi/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.InMemory.dll

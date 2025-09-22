@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FireflyApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bbb3bc2f5daadc50a5bde10518eda3d84d7edac9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8c15dd4381c0010f3355f8d9bcdb7e2e675b5e5d")]
 [assembly: System.Reflection.AssemblyProductAttribute("FireflyApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FireflyApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

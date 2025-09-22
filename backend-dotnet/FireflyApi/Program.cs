@@ -16,8 +16,20 @@ builder.Services.AddControllers();
 
 // Configure Entity Framework
 var connectionString = $"Server={builder.Configuration["DB_SERVER"]};Database={builder.Configuration["DB_NAME"]};User={builder.Configuration["DB_USER"]};Password={builder.Configuration["DB_PASSWORD"]};";
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+// For development, use in-memory database if MySQL is not available
+var useInMemoryDb = builder.Configuration["DB_SERVER"] == "localhost" || string.IsNullOrEmpty(builder.Configuration["DB_SERVER"]);
+
+if (useInMemoryDb)
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseInMemoryDatabase("FireflyInMemoryDb"));
+}
+else
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+}
 
 // Configure Identity
 builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
@@ -56,9 +68,18 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// Configure Redis
+// Configure Redis (optional for development)
 var redisConnectionString = builder.Configuration["REDIS_CACHE"] ?? "localhost:6379";
-builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisConnectionString));
+try
+{
+    builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisConnectionString));
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Warning: Could not connect to Redis: {ex.Message}");
+    // Add a dummy Redis service for development
+    builder.Services.AddSingleton<IConnectionMultiplexer>(provider => null!);
+}
 
 // Register custom services
 builder.Services.AddScoped<IJwtService, JwtService>();
