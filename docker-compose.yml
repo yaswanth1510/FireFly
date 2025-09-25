@@ -63,21 +63,16 @@ services:
       - .env
   
   backend:
-    image: backend
+    image: backend-dotnet
     ports:
-      - "8888:8888"
-    volumes:
-      - ./backend:/app
+      - "8888:80"
     depends_on:
       - db
     env_file:
       - .env
-    environment:
-      RUN_TEST_IN_MAIN_LOOP: "true"
     build:
-      context: ./backend
-      dockerfile: backend.dockerfile
-    command: /start-reload.sh
+      context: ./backend-dotnet/FireflyApi
+      dockerfile: Dockerfile
     labels:
       - traefik.enable=true
       - traefik.constraint-label-stack=${TRAEFIK_TAG?Variable not set}
@@ -86,20 +81,20 @@ services:
     networks:
       - default
 
-  celeryworker1:
-    image: celeryworker
-    volumes:
-      - ./backend:/app
-    depends_on:
-      - db
-      - redis
-    environment:
-      WORKER_NAME: "1_Worker"
-    env_file:
-      - .env
-    build:
-      context: ./backend
-      dockerfile: celeryworker.dockerfile
+  # celeryworker1:
+  #   image: celeryworker
+  #   volumes:
+  #     - ./backend:/app
+  #   depends_on:
+  #     - db
+  #     - redis
+  #   environment:
+  #     WORKER_NAME: "1_Worker"
+  #   env_file:
+  #     - .env
+  #   build:
+  #     context: ./backend
+  #     dockerfile: celeryworker.dockerfile
   
   frontend:
     image: frontend
