@@ -4,7 +4,7 @@ services:
   proxy:
     image: traefik:v2.2
     ports:
-      - "80:80"
+      - "8080:80"
       - "8090:8080"
     networks:
       - traefik-public
@@ -35,6 +35,7 @@ services:
       - "3306:3306"
     volumes:
       - app-db-data:/var/lib/mysql
+      - ./mysql_conf:/etc/mysql/conf.d
     env_file:
       - .env
     command:
